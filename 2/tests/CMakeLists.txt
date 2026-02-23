@@ -1,0 +1,5 @@
+find_package(GTest REQUIRED)
+include(GoogleTest)
+add_executable(small_test small_test.cpp)
+target_link_libraries(small_test PRIVATE matrix_lib GTest::gtest_main)
+gtest_discover_tests(small_test)
