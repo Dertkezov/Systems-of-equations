@@ -30,7 +30,7 @@ public:
         }
         v_.reserve(k);
         c_.reserve(k);
-        r_.reserve(nx_ + 1); 
+        r_.resize(nx_ + 1); 
         r_[0] = 0;
         
         int m = 0;
