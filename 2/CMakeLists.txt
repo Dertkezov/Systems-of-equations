@@ -15,3 +15,6 @@ endif()
 
 add_executable(matrix main.cpp)
 target_link_libraries(matrix PRIVATE matrix_lib)
+
+add_executable(matrix_operations matrix_operations.cpp)
+target_link_libraries(matrix_operations PRIVATE matrix_lib)
