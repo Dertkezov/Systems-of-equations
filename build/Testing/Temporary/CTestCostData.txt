@@ -1,0 +1,15 @@
+full_matrix_test.creation 1 0.145044
+full_matrix_test.scalar 1 0.179837
+full_matrix_test.vector 1 0.165544
+CSR_matrix_test.creation_1 1 0.152429
+CSR_matrix_test.vector 1 0.179501
+CSR_matrix_test.Creation_2 1 0.172238
+CSR_matrix_test.scalar 1 0.163573
+CSR_matrix_test.vector_2 1 0.165189
+CSR_matrix_test.comparation 1 0.169876
+Iteration_solver.MPI_Solution 1 0.234593
+Iteration_solver.Jacobi_Solution 1 0.173448
+Iteration_solver.GaussSeidel_Solution 1 0.160659
+QR_test.QR_from_A 1 0.158327
+QR_solver_test.QR_solution 1 0.158705
+---
