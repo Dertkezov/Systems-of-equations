@@ -1,1 +1,0 @@
-/usr/bin/g++ -O3 -Wall -Wextra -O3 -DNDEBUG CMakeFiles/small_test_1.dir/small_test_1.cpp.o -o small_test_1  /usr/lib/x86_64-linux-gnu/libgtest_main.a /usr/lib/x86_64-linux-gnu/libgtest.a 

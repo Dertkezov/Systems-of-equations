@@ -1,7 +1,0 @@
-add_test([=[Iteration_solver.MPI_Solution]=]  /mnt/d/eque/0/build/tests/small_test_2 [==[--gtest_filter=Iteration_solver.MPI_Solution]==] --gtest_also_run_disabled_tests)
-set_tests_properties([=[Iteration_solver.MPI_Solution]=]  PROPERTIES WORKING_DIRECTORY /mnt/d/eque/0/build/tests SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
-add_test([=[Iteration_solver.Jacobi_Solution]=]  /mnt/d/eque/0/build/tests/small_test_2 [==[--gtest_filter=Iteration_solver.Jacobi_Solution]==] --gtest_also_run_disabled_tests)
-set_tests_properties([=[Iteration_solver.Jacobi_Solution]=]  PROPERTIES WORKING_DIRECTORY /mnt/d/eque/0/build/tests SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
-add_test([=[Iteration_solver.GaussSeidel_Solution]=]  /mnt/d/eque/0/build/tests/small_test_2 [==[--gtest_filter=Iteration_solver.GaussSeidel_Solution]==] --gtest_also_run_disabled_tests)
-set_tests_properties([=[Iteration_solver.GaussSeidel_Solution]=]  PROPERTIES WORKING_DIRECTORY /mnt/d/eque/0/build/tests SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
-set(  small_test_2_TESTS Iteration_solver.MPI_Solution Iteration_solver.Jacobi_Solution Iteration_solver.GaussSeidel_Solution)
