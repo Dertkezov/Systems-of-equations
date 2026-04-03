@@ -1,6 +1,6 @@
 import os
 import math
-os.chdir("D:\\eque\\0\\graphs")
+os.chdir("D:\\eque\\HW\\graphs")
 
 import matplotlib.pyplot as plt
 

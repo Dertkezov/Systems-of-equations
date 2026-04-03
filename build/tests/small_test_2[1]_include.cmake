@@ -1,0 +1,5 @@
+if(EXISTS "/mnt/d/eque/HW/build/tests/small_test_2[1]_tests.cmake")
+  include("/mnt/d/eque/HW/build/tests/small_test_2[1]_tests.cmake")
+else()
+  add_test(small_test_2_NOT_BUILT small_test_2_NOT_BUILT)
+endif()

@@ -5,6 +5,7 @@
 #include "full_matrix.hpp"
 #include "Iteration_solver.hpp"
 #include "MPI_speed.hpp"
+#include "Chebyshev_speed_symmetry.hpp"
 
 TEST(Iteration_solver, MPI_Solution) {
     full_matrix A(3, 3);
@@ -81,6 +82,90 @@ TEST(Iteration_solver, Chebyshev_Solution) {
     int N = 8;
 
     solution res = Chebyshev_solver(A_CSR, b, x0, e, N);
+
+    EXPECT_NEAR(res.x[0], 1.0, 1e-6);
+    EXPECT_NEAR(res.x[1], 1.0, 1e-6);
+    EXPECT_NEAR(res.x[2], 1.0, 1e-6);
+}
+
+TEST(Iteration_solver, Chebyshev_acceleration_Jacobi_step) {
+    full_matrix A(3, 3);
+    A(0, 0) = 10.0; A(0, 1) = 5.0; A(0, 2) = 1.0;
+    A(1, 0) = 5.0; A(1, 1) = 20.0; A(1, 2) = 2.0;
+    A(2, 0) = 1.0; A(2, 1) = 2.0; A(2, 2) = 30.0;
+    std::vector<double> D(3);
+    for (size_t i = 0; i < 3; i++) {
+        D[i] = A(i, i);
+    }
+
+    CSR_matrix A_CSR(A);
+    std::vector<double> b = {16.0, 27.0, 33.0};
+    std::vector<double> x0 = {0.0, 0.0, 0.0};
+
+    double e = 1e-8;
+    int N = 1000;
+
+    auto jacobi_step = [&A_CSR, &D, &b](std::vector<double> x) {
+        return Jacobi_step(A_CSR, D, b, x);
+    };
+    double rho = estimate_rho(jacobi_step, x0);
+    solution res = Chebyshev_accelerate(jacobi_step, A_CSR, b, x0, rho, e, N);
+
+    EXPECT_NEAR(res.x[0], 1.0, 1e-6);
+    EXPECT_NEAR(res.x[1], 1.0, 1e-6);
+    EXPECT_NEAR(res.x[2], 1.0, 1e-6);
+}
+
+TEST(Iteration_solver, Chebyshev_acceleration_Gauss_step) {
+    full_matrix A(3, 3);
+    A(0, 0) = 10.0; A(0, 1) = 5.0; A(0, 2) = 1.0;
+    A(1, 0) = 5.0; A(1, 1) = 20.0; A(1, 2) = 2.0;
+    A(2, 0) = 1.0; A(2, 1) = 2.0; A(2, 2) = 30.0;
+    std::vector<double> D(3);
+    for (size_t i = 0; i < 3; i++) {
+        D[i] = A(i, i);
+    }
+
+    CSR_matrix A_CSR(A);
+    std::vector<double> b = {16.0, 27.0, 33.0};
+    std::vector<double> x0 = {0.0, 0.0, 0.0};
+
+    double e = 1e-8;
+    int N = 1000;
+
+    auto gauss_step = [&A_CSR, &D, &b](std::vector<double> x) {
+        return Gauss_step(A_CSR, D, b, x);
+    };
+    double rho = estimate_rho(gauss_step, x0);
+    solution res = Chebyshev_accelerate(gauss_step, A_CSR, b, x0, rho, e, N);
+
+    EXPECT_NEAR(res.x[0], 1.0, 1e-6);
+    EXPECT_NEAR(res.x[1], 1.0, 1e-6);
+    EXPECT_NEAR(res.x[2], 1.0, 1e-6);
+}
+
+TEST(Iteration_solver, Chebyshev_acceleration_Symmetric_Gauss_step) {
+    full_matrix A(3, 3);
+    A(0, 0) = 10.0; A(0, 1) = 5.0; A(0, 2) = 1.0;
+    A(1, 0) = 5.0; A(1, 1) = 20.0; A(1, 2) = 2.0;
+    A(2, 0) = 1.0; A(2, 1) = 2.0; A(2, 2) = 30.0;
+    std::vector<double> D(3);
+    for (size_t i = 0; i < 3; i++) {
+        D[i] = A(i, i);
+    }
+
+    CSR_matrix A_CSR(A);
+    std::vector<double> b = {16.0, 27.0, 33.0};
+    std::vector<double> x0 = {0.0, 0.0, 0.0};
+
+    double e = 1e-8;
+    int N = 1000;
+
+    auto sym_gauss_step = [&A_CSR, &D, &b](std::vector<double> x) {
+        return Symmetric_Gauss_step(A_CSR, D, b, x);
+    };
+    double rho = estimate_rho(sym_gauss_step, x0);
+    solution res = Chebyshev_accelerate(sym_gauss_step, A_CSR, b, x0, rho, e, N);
 
     EXPECT_NEAR(res.x[0], 1.0, 1e-6);
     EXPECT_NEAR(res.x[1], 1.0, 1e-6);

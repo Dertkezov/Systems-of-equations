@@ -119,10 +119,9 @@ inline solution Gauss_solver (const CSR_matrix& A, const std::vector<double>& b,
             x0[k] = (b[k] - sum1 - sum2) / D[k];
         }
 
-        x = A * x0;
         clock_t end = clock();
         double dt = (double)(end - start) / CLOCKS_PER_SEC * 1000;
-
+        x = A * x0;
         r = discrepancy(x, b);
         s.discrepancy_p.push_back(r);
         s.total_time += dt;

@@ -30,3 +30,9 @@ target_link_libraries(solver PRIVATE matrix_lib)
 
 add_executable(compare compare.cpp)
 target_link_libraries(compare PRIVATE matrix_lib)
+
+add_executable(compare_symmetric compare_symmetric.cpp)
+target_link_libraries(compare_symmetric PRIVATE matrix_lib)
+
+add_executable(symmetric_solver symmetric_solver.cpp)
+target_link_libraries(symmetric_solver PRIVATE matrix_lib)

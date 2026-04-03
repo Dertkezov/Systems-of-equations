@@ -71,5 +71,4 @@ int main() {
     for (size_t i = 0; i < R; i++){
         std::cout << res_4.x[i] << " ";
     }
-    std::cout<<std::endl;
 }
