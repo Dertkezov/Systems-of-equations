@@ -1,1 +1,0 @@
-/usr/bin/g++ -O3 -Wall -Wextra -O3 -DNDEBUG CMakeFiles/solver.dir/solver.cpp.o -o solver 
