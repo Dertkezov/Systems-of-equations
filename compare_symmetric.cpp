@@ -11,7 +11,7 @@
 #include "Steps_for_chebyshev.hpp"
 
 int main() {
-    std::size_t R = 10000;
+    std::size_t R = 1000;
 
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -34,7 +34,7 @@ int main() {
         A(j, i) = a;
     }
 
-    double val = 1000000;
+    double val = 10000;
     std::vector<double> D(R);
     for (size_t k = 0; k < R; k++) {
         A(k, k) = val; 
@@ -68,12 +68,15 @@ int main() {
 
     double rho1 = estimate_rho(jacobi_step, x0);
     solution res_1 = Chebyshev_accelerate(jacobi_step, A_CSR, b, x0, rho1, e, N);
+    std::fill(x0.begin(), x0.end(), 0.0);
 
     double rho2 = estimate_rho(gauss_step, x0);
     solution res_2 = Chebyshev_accelerate(gauss_step, A_CSR, b, x0, rho2, e, N);
+    std::fill(x0.begin(), x0.end(), 0.0);
 
     double rho3 = estimate_rho(sym_gauss_step, x0);
     solution res_3 = Chebyshev_accelerate(sym_gauss_step, A_CSR, b, x0, rho3, e, N);
+    std::fill(x0.begin(), x0.end(), 0.0);
 
     std::ofstream out_iter("graphs/iter_data_sym.txt");
     size_t max_iter = std::max({res_1.discrepancy_p.size(), 

@@ -171,3 +171,64 @@ TEST(Iteration_solver, Chebyshev_acceleration_Symmetric_Gauss_step) {
     EXPECT_NEAR(res.x[1], 1.0, 1e-6);
     EXPECT_NEAR(res.x[2], 1.0, 1e-6);
 }
+
+TEST(Iteration_solver, SOR_solution) {
+    full_matrix A(3, 3);
+    A(0, 0) = 10.0; A(0, 1) = 4.0; A(0, 2) = 2.0;
+    A(1, 0) = 5.0; A(1, 1) = 20.0; A(1, 2) = 2.0;
+    A(2, 0) = 1.0; A(2, 1) = 3.0; A(2, 2) = 30.0;
+
+    CSR_matrix A_CSR(A);
+    std::vector<double> b = {16.0, 27.0, 34.0};
+    std::vector<double> x0 = {0.0, 0.0, 0.0};
+
+    double e = 1e-8;
+    int N = 1000;
+    double omega = 1.5;
+
+    solution res = SOR_solver(A_CSR, b, x0, e, omega, N);
+
+    EXPECT_NEAR(res.x[0], 1.0, 1e-6);
+    EXPECT_NEAR(res.x[1], 1.0, 1e-6);
+    EXPECT_NEAR(res.x[2], 1.0, 1e-6);
+}
+
+TEST(Iteration_solver, fast_descent_solver) {
+    full_matrix A(3, 3);
+    A(0, 0) = 10.0; A(0, 1) = 4.0; A(0, 2) = 2.0;
+    A(1, 0) = 5.0; A(1, 1) = 20.0; A(1, 2) = 2.0;
+    A(2, 0) = 1.0; A(2, 1) = 3.0; A(2, 2) = 30.0;
+
+    CSR_matrix A_CSR(A);
+    std::vector<double> b = {16.0, 27.0, 34.0};
+    std::vector<double> x0 = {0.0, 0.0, 0.0};
+
+    double e = 1e-8;
+    int N = 1000;
+
+    solution res = fast_descent(A_CSR, b, x0, e, N);
+
+    EXPECT_NEAR(res.x[0], 1.0, 1e-6);
+    EXPECT_NEAR(res.x[1], 1.0, 1e-6);
+    EXPECT_NEAR(res.x[2], 1.0, 1e-6);
+}
+
+TEST(Iteration_solver, CG_solver) {
+    full_matrix A(3, 3);
+    A(0, 0) = 10.0; A(0, 1) = 4.0; A(0, 2) = 2.0;
+    A(1, 0) = 5.0; A(1, 1) = 20.0; A(1, 2) = 2.0;
+    A(2, 0) = 1.0; A(2, 1) = 3.0; A(2, 2) = 30.0;
+
+    CSR_matrix A_CSR(A);
+    std::vector<double> b = {16.0, 27.0, 34.0};
+    std::vector<double> x0 = {0.0, 0.0, 0.0};
+
+    double e = 1e-8;
+    int N = 1000;
+
+    solution res = CG_solver(A_CSR, b, x0, e, N);
+
+    EXPECT_NEAR(res.x[0], 1.0, 1e-6);
+    EXPECT_NEAR(res.x[1], 1.0, 1e-6);
+    EXPECT_NEAR(res.x[2], 1.0, 1e-6);
+}

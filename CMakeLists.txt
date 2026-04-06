@@ -36,3 +36,6 @@ target_link_libraries(compare_symmetric PRIVATE matrix_lib)
 
 add_executable(symmetric_solver symmetric_solver.cpp)
 target_link_libraries(symmetric_solver PRIVATE matrix_lib)
+
+add_executable(compare_ellipse_matrix compare_ellipse_matrix.cpp)
+target_link_libraries(compare_ellipse_matrix PRIVATE matrix_lib)
