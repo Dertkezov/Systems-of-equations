@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
 project(MatrixBenchmark LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 option(BUILD_TESTS "Build unit tests" ON)
@@ -39,3 +39,6 @@ target_link_libraries(symmetric_solver PRIVATE matrix_lib)
 
 add_executable(compare_ellipse_matrix compare_ellipse_matrix.cpp)
 target_link_libraries(compare_ellipse_matrix PRIVATE matrix_lib)
+
+add_executable(compare_GMRES compare_GMRES.cpp)
+target_link_libraries(compare_GMRES PRIVATE matrix_lib)

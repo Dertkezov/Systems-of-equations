@@ -284,3 +284,4 @@ inline solution CG_solver(const CSR_matrix& A, const std::vector<double>& b, std
     s.x = x0;
     return s;
 }
+

@@ -13,8 +13,9 @@ r2 = []
 r3 = []
 r4 = []
 r5 = []
+r6 = []
 for i in range (n):
-    v1, v2, v3, v4, v5 = list(map(float, a[i].split()))
+    v1, v2, v3, v4, v5, v6 = list(map(float, a[i].split()))
     if v1 > 0:
         r1.append(math.log(v1))
     if v2 > 0:
@@ -25,6 +26,8 @@ for i in range (n):
         r4.append(math.log(v4))
     if v5 > 0:
         r5.append(math.log(v5))
+    if v6 > 0:
+        r6.append(math.log(v6))
     d.append(i + 1)
     
 plt.figure(figsize=(16, 9))
@@ -33,6 +36,7 @@ plt.plot(d[:len(r2)], r2, '-o', markersize=3, color = "green", label = "SOR")
 plt.plot(d[:len(r3)], r3, '-o', markersize=3, color = "yellow", label = "Gauss with acceleration")
 plt.plot(d[:len(r4)], r4, '-o', markersize=3, color = "purple", label = "Fast_slope")
 plt.plot(d[:len(r5)], r5, '-o', markersize=3, color = "red", label = "GC")
+plt.plot(d[:len(r6)], r6, '-o', markersize=3, color = "magenta", label = "GMRES")
 plt.legend()
 plt.title("Зависимость невязки от итерации")
 plt.xlabel('n, итерация')
@@ -100,6 +104,17 @@ for i in range (n):
     r5[i] = math.log(abs(r5[i]))
 plt.plot(t5, r5, '-o', markersize=3, color = "red", label = "GC")
 
+f = open("time_gm.txt")
+a = f.readlines()
+n = len(a)
+t6 = [0] * n
+r6 = [0] * n
+for i in range (n):
+    t6[i], r6[i] = list(map(float, a[i].split()))
+for i in range (n):
+    r6[i] = math.log(abs(r6[i]))
+plt.plot(t6, r6, '-o', markersize=3, color = "magenta", label = "GMRES")
+
 plt.legend()
 plt.title("Зависимость невязки от времени")
 plt.xlabel('t, мс')
@@ -114,6 +129,7 @@ plt.figure(figsize=(16, 9))
 plt.plot(t3, r3, '-o', markersize=3, color = "Yellow", label = "Gauss_with_acceleration")
 plt.plot(t4, r4, '-o', markersize=3, color = "purple", label = "Fast_descent")
 plt.plot(t5, r5, '-o', markersize=3, color = "red", label = "GC")
+plt.plot(t6, r6, '-o', markersize=3, color = "magenta", label = "GMRES")
 plt.legend()
 plt.title("Зависимость невязки от времени")
 plt.xlabel('t, мс')

@@ -10,6 +10,7 @@
 #include "Chebyshev_speed_symmetry.hpp"
 #include "Steps_for_chebyshev.hpp"
 #include "matrix_generator.hpp"
+#include "GMRES.hpp"
 
 int main() {
     std::random_device rd;
@@ -60,20 +61,24 @@ int main() {
     solution res_CG = CG_solver(A_CSR, b, x0, e, N);
     std::fill(x0.begin(), x0.end(), 0.0);
 
+    int m = 50;
+    solution res_GM = GMRES_solver(A_CSR, b, x0, e, N, m);
 
     std::ofstream out_iter("graphs/iter_data.txt");
     size_t max_iter = std::max({res_gs.discrepancy_p.size(), 
                                 res_SOR.discrepancy_p.size(), 
                                 res_gauss_accel.discrepancy_p.size(),
                                 res_descent.discrepancy_p.size(),
-                                res_CG.discrepancy_p.size()});
+                                res_CG.discrepancy_p.size(),
+                                res_GM.discrepancy_p.size()});
     for (size_t k = 0; k < max_iter; k++) {
         double r_1 = (k < res_gs.discrepancy_p.size()) ? res_gs.discrepancy_p[k] : -1.0;
         double r_2 = (k < res_SOR.discrepancy_p.size()) ? res_SOR.discrepancy_p[k] : -1.0;
         double r_3  = (k < res_gauss_accel.discrepancy_p.size())  ? res_gauss_accel.discrepancy_p[k]  : -1.0;
         double r_4  = (k < res_descent.discrepancy_p.size())  ? res_descent.discrepancy_p[k]  : -1.0;
         double r_5  = (k < res_CG.discrepancy_p.size())  ? res_CG.discrepancy_p[k]  : -1.0;
-        out_iter << r_1 << " " << r_2 << " " << r_3 << " " << r_4 << " " << r_5 << "\n";
+        double r_6  = (k < res_GM.discrepancy_p.size())  ? res_GM.discrepancy_p[k]  : -1.0;
+        out_iter << r_1 << " " << r_2 << " " << r_3 << " " << r_4 << " " << r_5 << " " << r_6 << "\n";
     }
     out_iter.close();
 
@@ -106,4 +111,10 @@ int main() {
         out_cg << res_CG.time_p[k] << " " << res_CG.discrepancy_p[k] << "\n";
     }
     out_cg.close();
+
+    std::ofstream out_gm("graphs/time_gm.txt");
+    for (size_t k = 0; k < res_GM.time_p.size(); k++) {
+        out_gm << res_GM.time_p[k] << " " << res_GM.discrepancy_p[k] << "\n";
+    }
+    out_gm.close();
 }
