@@ -1,1 +1,0 @@
-/usr/bin/g++ -O3 -Wall -Wextra -O3 -DNDEBUG CMakeFiles/compare_GMRES.dir/compare_GMRES.cpp.o -o compare_GMRES 

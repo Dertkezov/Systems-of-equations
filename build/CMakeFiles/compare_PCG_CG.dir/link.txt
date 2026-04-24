@@ -1,1 +1,0 @@
-/usr/bin/g++ -O3 -Wall -Wextra -O3 -DNDEBUG CMakeFiles/compare_PCG_CG.dir/compare_PCG_CG.cpp.o -o compare_PCG_CG 
