@@ -24,3 +24,19 @@ CSR_matrix generate_poisson_matrix(int grid_n) {
     }
     return CSR_matrix(N, N, v, c, r);
 }
+
+full_matrix generate_poisson_matrix_PCG(int grid_n) {
+    int N = grid_n * grid_n;
+    full_matrix A(N, N);
+    for (int i = 0; i < grid_n; i++) {
+        for (int j = 0; j < grid_n; j++) {
+            int idx = i * grid_n + j;
+            A(idx, idx) = -4.0;
+            if (i > 0) A(idx - grid_n, idx) = 1.0;
+            if (i < grid_n - 1) A(idx + grid_n, idx) = 1.0;
+            if (j > 0) A(idx - 1, idx) = 1.0;
+            if (j < grid_n - 1) A(idx + 1, idx) = 1.0;
+        }
+    }
+    return A;
+}

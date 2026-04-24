@@ -42,3 +42,6 @@ target_link_libraries(compare_ellipse_matrix PRIVATE matrix_lib)
 
 add_executable(compare_GMRES compare_GMRES.cpp)
 target_link_libraries(compare_GMRES PRIVATE matrix_lib)
+
+add_executable(compare_PCG_CG compare_PCG_CG.cpp)
+target_link_libraries(compare_PCG_CG PRIVATE matrix_lib)

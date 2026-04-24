@@ -7,6 +7,8 @@
 #include "MPI_speed.hpp"
 #include "Chebyshev_speed_symmetry.hpp"
 #include "GMRES.hpp"
+#include "pre_CG.hpp"
+#include "matrix_for_preconditioning.hpp"
 
 TEST(Iteration_solver, MPI_Solution) {
     full_matrix A(3, 3);
@@ -249,6 +251,27 @@ TEST(Iteration_solver, GMRES_solver) {
     int m = 5;
 
     solution res = GMRES_solver(A_CSR, b, x0, e, N, m);
+
+    EXPECT_NEAR(res.x[0], 1.0, 1e-6);
+    EXPECT_NEAR(res.x[1], 1.0, 1e-6);
+    EXPECT_NEAR(res.x[2], 1.0, 1e-6);
+}
+
+TEST(Iteration_solver, PCG_solver) {
+    full_matrix A(3, 3);
+    A(0, 0) = 10.0; A(0, 1) = 5.0; A(0, 2) = 1.0;
+    A(1, 0) = 5.0; A(1, 1) = 20.0; A(1, 2) = 2.0;
+    A(2, 0) = 1.0; A(2, 1) = 2.0; A(2, 2) = 30.0;
+
+    CSR_matrix A_CSR(A);
+    std::vector<double> b = {16.0, 27.0, 33.0};
+    std::vector<double> x0 = {0.0, 0.0, 0.0};
+
+    double e = 1e-8;
+    int N = 1000;
+
+    CSR_matrix L = Cholesky_factor(A);
+    solution res = PCG_solver(A_CSR, b, x0, e, N, L);
 
     EXPECT_NEAR(res.x[0], 1.0, 1e-6);
     EXPECT_NEAR(res.x[1], 1.0, 1e-6);

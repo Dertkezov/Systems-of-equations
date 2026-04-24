@@ -1,0 +1,5 @@
+add_test([=[QR_test.QR_from_A]=]  /mnt/d/eque/HW/build/tests/small_test_2 [==[--gtest_filter=QR_test.QR_from_A]==] --gtest_also_run_disabled_tests)
+set_tests_properties([=[QR_test.QR_from_A]=]  PROPERTIES WORKING_DIRECTORY /mnt/d/eque/HW/build/tests SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
+add_test([=[QR_solver_test.QR_solution]=]  /mnt/d/eque/HW/build/tests/small_test_2 [==[--gtest_filter=QR_solver_test.QR_solution]==] --gtest_also_run_disabled_tests)
+set_tests_properties([=[QR_solver_test.QR_solution]=]  PROPERTIES WORKING_DIRECTORY /mnt/d/eque/HW/build/tests SKIP_REGULAR_EXPRESSION [==[\[  SKIPPED \]]==])
+set(  small_test_2_TESTS QR_test.QR_from_A QR_solver_test.QR_solution)
